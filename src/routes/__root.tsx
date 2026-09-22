@@ -78,17 +78,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "PROMPT TESTER ANI" },
-      { name: "description", content: "Prompt Tester is a full-stack JavaScript app for learning AI prompt engineering and API integration." },
+      {
+        name: "description",
+        content:
+          "Prompt Tester is a full-stack JavaScript app for learning AI prompt engineering and API integration.",
+      },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "PROMPT TESTER ANI" },
-      { property: "og:description", content: "Prompt Tester is a full-stack JavaScript app for learning AI prompt engineering and API integration." },
+      {
+        property: "og:description",
+        content:
+          "Prompt Tester is a full-stack JavaScript app for learning AI prompt engineering and API integration.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "PROMPT TESTER ANI" },
-      { name: "twitter:description", content: "Prompt Tester is a full-stack JavaScript app for learning AI prompt engineering and API integration." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b8b6e352-ab03-40e2-9b04-2246996e701c/id-preview-2fb5572e--251e79fd-c76b-4f0f-afa7-97df8ed9da67.lovable.app-1781206574540.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b8b6e352-ab03-40e2-9b04-2246996e701c/id-preview-2fb5572e--251e79fd-c76b-4f0f-afa7-97df8ed9da67.lovable.app-1781206574540.png" },
+      {
+        name: "twitter:description",
+        content:
+          "Prompt Tester is a full-stack JavaScript app for learning AI prompt engineering and API integration.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b8b6e352-ab03-40e2-9b04-2246996e701c/id-preview-2fb5572e--251e79fd-c76b-4f0f-afa7-97df8ed9da67.lovable.app-1781206574540.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b8b6e352-ab03-40e2-9b04-2246996e701c/id-preview-2fb5572e--251e79fd-c76b-4f0f-afa7-97df8ed9da67.lovable.app-1781206574540.png",
+      },
     ],
     links: [
       {
