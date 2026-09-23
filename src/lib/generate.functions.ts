@@ -50,7 +50,9 @@ export const generatePrompt = createServerFn({ method: "POST" })
         throw new Error("AI credits exhausted. Add credits to keep generating.");
       }
       if (/400/.test(message)) {
-        throw new Error("Gemini rejected the request. Check the model name and API key restrictions.");
+        throw new Error(
+          "Gemini rejected the request. Check the model name and API key restrictions.",
+        );
       }
       if (/401|403|api key|permission/i.test(message)) {
         throw new Error("Invalid API key detected on the server.");

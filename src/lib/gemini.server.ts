@@ -26,17 +26,13 @@ type GeminiGenerateResponse = {
   };
 };
 
-export async function generateGeminiText(
-  prompt: string,
-  model: string,
-  systemPrompt?: string
-) {
+export async function generateGeminiText(prompt: string, model: string, systemPrompt?: string) {
   const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
   if (!apiKey) {
     throw new Error("Missing GEMINI_API_KEY on the server.");
   }
 
-  const body: any = {
+  const body: Record<string, unknown> = {
     contents: [
       {
         role: "user",
@@ -68,8 +64,7 @@ export async function generateGeminiText(
 
   if (!response.ok) {
     const message =
-      payload?.error?.message ??
-      `Gemini request failed with status ${response.status}.`;
+      payload?.error?.message ?? `Gemini request failed with status ${response.status}.`;
     throw new Error(message);
   }
 
