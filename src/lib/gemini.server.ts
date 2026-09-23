@@ -26,10 +26,29 @@ type GeminiGenerateResponse = {
   };
 };
 
-export async function generateGeminiText(prompt: string, model: string) {
+export async function generateGeminiText(
+  prompt: string,
+  model: string,
+  systemPrompt?: string
+) {
   const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
   if (!apiKey) {
     throw new Error("Missing GEMINI_API_KEY on the server.");
+  }
+
+  const body: any = {
+    contents: [
+      {
+        role: "user",
+        parts: [{ text: prompt }],
+      },
+    ],
+  };
+
+  if (systemPrompt) {
+    body.systemInstruction = {
+      parts: [{ text: systemPrompt }],
+    };
   }
 
   const response = await fetch(
@@ -39,14 +58,7 @@ export async function generateGeminiText(prompt: string, model: string) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: prompt }],
-          },
-        ],
-      }),
+      body: JSON.stringify(body),
     },
   );
 

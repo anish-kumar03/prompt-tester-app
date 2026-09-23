@@ -31,12 +31,13 @@ const MODELS = [
 ] as const;
 
 function Index() {
+  const [systemPrompt, setSystemPrompt] = useState("");
   const [prompt, setPrompt] = useState("");
   const [model, setModel] = useState<"gemini">("gemini");
   const [error, setError] = useState<string | null>(null);
 
   const generateFn = useServerFn(generatePrompt);
-  const mutation = useMutation<GenerateResult, Error, { prompt: string; model: "gemini" }>({
+  const mutation = useMutation<GenerateResult, Error, { prompt: string; systemPrompt?: string; model: "gemini" }>({
     mutationFn: (vars) => generateFn({ data: vars }),
     onError: (err) => setError(err.message),
     onSuccess: () => setError(null),
@@ -52,10 +53,15 @@ function Index() {
       return;
     }
     setError(null);
-    mutation.mutate({ prompt: trimmed, model });
+    mutation.mutate({ 
+      prompt: trimmed, 
+      systemPrompt: systemPrompt.trim() || undefined,
+      model 
+    });
   };
 
   const handleClear = () => {
+    setSystemPrompt("");
     setPrompt("");
     setError(null);
   };
@@ -83,6 +89,24 @@ function Index() {
         <main className="grid gap-6">
           {/* Prompt + model card */}
           <section className="rounded-2xl border border-border bg-card p-5 shadow-xl shadow-black/20 sm:p-6">
+            <div className="mb-4">
+              <div className="mb-2 flex items-center justify-between">
+                <label htmlFor="systemPrompt" className="text-sm font-medium">
+                  System Instructions <span className="text-muted-foreground font-normal">(Optional)</span>
+                </label>
+              </div>
+              <textarea
+                id="systemPrompt"
+                value={systemPrompt}
+                onChange={(e) => setSystemPrompt(e.target.value)}
+                placeholder="e.g. You are an expert React developer. Output only valid JSON."
+                rows={2}
+                maxLength={5000}
+                disabled={isLoading}
+                className="w-full resize-y rounded-xl border border-border bg-input p-4 text-sm leading-relaxed text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
+              />
+            </div>
+
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <label htmlFor="prompt" className="text-sm font-medium">
                 Your prompt
@@ -230,6 +254,10 @@ function Index() {
           <section className="rounded-2xl border border-border bg-card p-5 shadow-xl shadow-black/20 sm:p-6">
             <h2 className="mb-4 text-lg font-semibold">Learning corner</h2>
             <div className="grid gap-4 sm:grid-cols-2">
+              <LearnCard
+                title="What is a System Prompt?"
+                body="System instructions set the behavior, persona, and boundaries for the AI (e.g., 'You are an expert developer'). It is separated from the main user prompt to keep instructions predictable."
+              />
               <LearnCard
                 title="What is a Prompt?"
                 body="A prompt is the instruction or question you send to an AI model. Better prompts (clear context, format hints, examples) usually give better results."

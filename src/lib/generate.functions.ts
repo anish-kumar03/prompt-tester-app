@@ -9,6 +9,7 @@ const MODEL_MAP = {
 } as const;
 
 const InputSchema = z.object({
+  systemPrompt: z.string().max(5000).optional(),
   prompt: z.string().min(1, "Prompt cannot be empty").max(5000),
   model: z.enum(["gemini"]),
 });
@@ -26,7 +27,7 @@ export const generatePrompt = createServerFn({ method: "POST" })
 
     const startedAt = Date.now();
     try {
-      const result = await generateGeminiText(data.prompt, modelId);
+      const result = await generateGeminiText(data.prompt, modelId, data.systemPrompt);
       const elapsedMs = Date.now() - startedAt;
 
       return {
